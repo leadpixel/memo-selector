@@ -1,0 +1,67 @@
+---
+kind: pipeline
+type: docker
+name: default
+
+platform:
+  os: linux
+  arch: amd64
+
+steps:
+- name: install
+  image: node:lts-slim
+  commands:
+  - npm install
+
+- name: lint
+  image: node:lts-slim
+  commands:
+  - npm run -s lint
+
+- name: test
+  image: node:lts-slim
+  commands:
+  - npm run -s test
+
+- name: notify
+  image: plugins/slack
+  settings:
+    webhook:
+      from_secret: slack_webhook
+  failure: ignore
+  when:
+    branch:
+    - main
+    status:
+    - failure
+
+---
+kind: pipeline
+type: docker
+name: audits
+
+platform:
+  os: linux
+  arch: amd64
+
+steps:
+- name: version
+  image: node:lts-slim
+  commands:
+  - node --version
+
+- name: outdated
+  image: node:lts-slim
+  commands:
+  - npm outdated
+
+- name: audit
+  image: node:lts-slim
+  commands:
+  - npm audit
+
+---
+kind: signature
+hmac: f52e10beb86eff84db37db3a5842c461d3f2a206fbea41dc5c252abf2245078a
+
+...
