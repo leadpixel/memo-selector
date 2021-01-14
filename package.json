@@ -1,0 +1,39 @@
+{
+  "name": "@leadpixel/memo-selector",
+  "version": "0.0.2",
+  "description": "> TODO: description",
+  "author": "Jack Palfrey <jack.palf@gmail.com>",
+  "license": "ISC",
+  "main": "lib/index.js",
+  "files": [
+    "lib"
+  ],
+  "dependencies": {
+    "safe-stable-stringify": "^1.1.1"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.12.10",
+    "@babel/core": "^7.12.10",
+    "@babel/node": "^7.12.10",
+    "@babel/preset-env": "^7.12.11",
+    "eslint": "^7.17.0",
+    "eslint-config-prettier": "^7.1.0",
+    "eslint-config-standard": "^16.0.2",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-prettier": "^3.3.1",
+    "eslint-plugin-promise": "^4.2.1",
+    "expect": "^26.6.2",
+    "mocha": "^8.2.1",
+    "nyc": "^15.1.0",
+    "prettier": "^2.2.1"
+  },
+  "scripts": {
+    "clean": "rm -rf lib",
+    "lint": "eslint .",
+    "test": "mocha",
+    "test:coverage": "nyc mocha",
+    "build": "babel src -d lib",
+    "start": "babel-node src/index.js"
+  }
+}
