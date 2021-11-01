@@ -4,7 +4,6 @@ import { memoize } from './memoize';
 
 export function memoSelector(lenses, transformer) {
     const cache = mkCache();
-
     const fs = lenses.map(memoize);
 
     return memoize((input) => {

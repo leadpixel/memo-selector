@@ -1,4 +1,3 @@
-import { hash } from './hash';
 import { mkCache } from './cache';
 
 export function memoize(fn) {

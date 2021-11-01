@@ -8,9 +8,9 @@ export function mock() {
     function self() {
         count++;
         calls.push({ args: [...arguments] });
-      if (Boolean(operation)) {
-        operation()
-      }
+        if (operation) {
+            operation();
+        }
         return returnValue;
     }
 
@@ -20,7 +20,7 @@ export function mock() {
     };
 
     self.executes = (op) => {
-      operation = op
+        operation = op;
         return self;
     };
 
