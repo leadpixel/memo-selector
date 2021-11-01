@@ -1,25 +1,31 @@
 export function mock() {
     let count = 0;
     let returnValue;
+    let operation;
 
     const calls = [];
 
-    function x() {
+    function self() {
         count++;
         calls.push({ args: [...arguments] });
+      if (Boolean(operation)) {
+        operation()
+      }
         return returnValue;
     }
 
-    x.returns = (v) => {
+    self.returns = (v) => {
         returnValue = v;
-        return x;
+        return self;
     };
 
-    x.callCount = () => count;
-
-    x.firstCall = () => {
-        return calls[0];
+    self.executes = (op) => {
+      operation = op
+        return self;
     };
 
-    return x;
+    self.callCount = () => count;
+    self.firstCall = () => calls[0];
+
+    return self;
 }

@@ -1,7 +1,6 @@
 import expect from 'expect';
 
 import { memoSelector } from '../src/index';
-import { mock } from './utils/mock';
 
 describe('result', () => {
     it('returns the result of the transformation', () => {

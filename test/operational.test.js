@@ -3,21 +3,47 @@ import expect from 'expect';
 import { memoSelector } from '../src/index';
 import { mock } from './utils/mock';
 
+function measureDuration(op) {
+    const start = new Date();
+    op();
+    const end = new Date();
+    return end - start;
+}
+
 describe('operational', () => {
-    it('performance of cache hit', () => {
+    it('runs expensive selectors', () => {
+        function longLoop() {
+            let i = 1000000000;
+            let j;
+            while (i-- > 0) {
+                j = i;
+            }
+            return j;
+        }
+
+        const lens = mock().executes(longLoop);
+        const selector = memoSelector([lens], () => {});
+
+        const duration = measureDuration(() => {
+            selector({ a: 1, b: 2 });
+            selector({ a: 1, b: 2 });
+        });
+        expect(duration).toBeLessThan(750);
+    });
+
+    it('pointlessly measuring performance of cache hit', () => {
         const transformer = mock();
         const lens = mock();
         const state = { a: 1, b: 2 };
         const selector = memoSelector([lens], transformer);
 
-        const start = new Date();
-        for (let i = 0; i < 1000000; i++) {
-            selector(state);
-        }
+        const duration = measureDuration(() => {
+            for (let i = 0; i < 1000000; i++) {
+                selector(state);
+            }
+        });
 
-        const end = new Date();
-        console.log(end - start);
-        expect(end - start).toBeLessThan(30);
+        expect(duration).toBeLessThan(30);
     });
 
     it.skip('memory usage', () => {
