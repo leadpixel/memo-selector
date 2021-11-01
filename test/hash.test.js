@@ -41,7 +41,7 @@ describe('hash', () => {
         expect(a).not.toEqual(b);
     });
 
-    it('is fast enough', () => {
+    it('is fast enough ( 1M hashes in 250ms )', () => {
         const ONE_MILLION = 1000000;
         const input = { k: Math.random() };
 
@@ -51,7 +51,8 @@ describe('hash', () => {
         }
 
         const end = new Date();
+        const duration = end - start;
 
-        console.log(end - start);
+        expect(duration).toBeLessThan(250);
     });
 });

@@ -26,25 +26,39 @@ describe('result', () => {
         expect(resultA).toEqual(resultB);
     });
 
-    it('returns a new value if the input object is modified (1)', () => {
-        const state = { a: 1, b: 2 };
+    it('uses complex objects as keys (returns different result)', () => {
+        const selector = memoSelector([(x) => x], (x) => x);
+        const resultA = selector({ key: 'some-key' });
+        const resultB = selector({ key: 'other-key' });
+        expect(resultA).not.toEqual(resultB);
+    });
+
+    it('recalculates if the input object has different values', () => {
         const selector = memoSelector(
             [({ a }) => a, ({ b }) => b],
             (a, b) => a + b
         );
 
-        const resultA = selector(state);
-        const resultB = selector({ a: 10, b: 2 });
+        const resultA = selector({ a: 1, b: 2 });
+        const resultB = selector({ a: 1, b: 20 });
         expect(resultA === resultB).toEqual(false);
     });
 
-    it('returns a new value if the input object is modified (2)', () => {
-        const state = { a: 1, b: 2 };
+    it('only uses lens targets to calculate result', () => {
+        const selector = memoSelector([({ a }) => a], (x) => x);
+
+        const resultA = selector({ a: 1, b: 2 });
+        const resultB = selector({ a: 1, b: 20 });
+        expect(resultA === resultB).toEqual(true);
+    });
+
+    it.skip('recalculates if the input object is modified', () => {
         const selector = memoSelector(
             [({ a }) => a, ({ b }) => b],
             (a, b) => a + b
         );
 
+        const state = { a: 1, b: 2 };
         const resultA = selector(state);
         state.a = 10;
         const resultB = selector(state);

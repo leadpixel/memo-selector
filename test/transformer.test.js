@@ -79,12 +79,15 @@ describe('transformer', () => {
         expect(transformer.callCount()).toEqual(1);
     });
 
-    it('stores historic values', () => {
+    it('stores historic values (at least 3)', () => {
         const selector = memoSelector([(x) => x], transformer);
         selector('keyA');
         selector('keyB');
+        selector('keyC');
+        selector('keyB');
         selector('keyA');
-        expect(transformer.callCount()).toEqual(2);
+        selector('keyC');
+        expect(transformer.callCount()).toEqual(3);
     });
 
     it('serializes objects to use as keys', () => {

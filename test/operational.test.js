@@ -13,7 +13,7 @@ function measureDuration(op) {
 describe('operational', () => {
     it('runs expensive selectors', () => {
         function longLoop() {
-            let i = 1000000000;
+            let i = 100000000; // 100 million
             let j;
             while (i-- > 0) {
                 j = i;
@@ -28,10 +28,10 @@ describe('operational', () => {
             selector({ a: 1, b: 2 });
             selector({ a: 1, b: 2 });
         });
-        expect(duration).toBeLessThan(750);
+        expect(duration).toBeLessThan(250);
     });
 
-    it('pointlessly measuring performance of cache hit', () => {
+    it('measuring performance of cache hit', () => {
         const transformer = mock();
         const lens = mock();
         const state = { a: 1, b: 2 };
