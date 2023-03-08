@@ -1,23 +1,12 @@
 {
-    "env": {
-        "browser": true,
-        "commonjs": true,
-        "es2021": true,
-        "mocha": true
-    },
-    "extends": [
-        "standard",
-        "eslint:recommended",
-        "plugin:prettier/recommended"
-    ],
-    "parserOptions": {
-        "ecmaVersion": 12
-    },
-    "plugins": [
-      "prettier"
-    ],
-    "rules": {
-      "prettier/prettier": "warn",
-      "no-unused-vars": "warn"
-    }
+  "env": {
+    "browser": true,
+    "commonjs": true,
+    "es2021": true,
+    "mocha": true
+  },
+  "extends": "@leadpixel",
+  "parserOptions": {
+    "ecmaVersion": 12
+  }
 }
