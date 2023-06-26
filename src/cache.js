@@ -27,7 +27,7 @@ function mkSingleStore() {
 
     return {
         has: (key) => argumentsEqual(key, storedKey),
-        get: (key) => storedValue,
+        get: () => storedValue,
         set: (key, value) => {
             storedKey = key;
             storedValue = value;
